@@ -15,7 +15,6 @@ class PaymentsUploadService
 
     public function upload($params): void
     {
-        echo $params->path;
         if ($this->paymentsUpload->type === TypeLoader::File){
             $this->uploadCSV($params->path);
         }

@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Category;
-use App\Models\User;
+use App\Models\Chart;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('day_statistics', function (Blueprint $table) {
-            $table->id();
-            $table->timestamp('date');
-            $table->float('amount_sum')->default(0);
+        Schema::create('category_chart', function (Blueprint $table) {
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Chart::class)->constrained()->cascadeOnDelete();
 
+            $table->primary(['category_id', 'chart_id']);
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('day_statistics');
+        Schema::dropIfExists('category_chart');
     }
 };

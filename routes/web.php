@@ -59,11 +59,13 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/test', function () {
-    $bankPayment =  \App\Models\payments\BankPayment::query()->find(42);
+    $user = \App\Models\User::query()->first();
+    $start = \Carbon\Carbon::parse('2023-10-01 00:00:00');
+    $end = \Carbon\Carbon::parse('2023-12-03 13:42:13');
+    $updaterMonth = new \App\Services\Statistics\StatisticUpdaters\MonthStatisticUpdater();
+    $updater = new \App\Services\Statistics\StatisticUpdaters\DayStatisticUpdater($updaterMonth);
+    $updater->startUpdate($user, $start, $end);
 
-//    $category = $user->categories()->find($request->category_id);
-
-    dd($bankPayment->categories);
 });
 
 require __DIR__.'/auth.php';

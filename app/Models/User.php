@@ -16,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property PaymentsUpload[] paymentsUpload
  * @property BankPayment[] bankPayments
  * @property Category[] categories
+ * @property Chart[] charts
  */
 class User extends Authenticatable
 {
@@ -56,6 +57,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(PaymentsUpload::class);
     }
+
     public function bankPayments(): HasMany
     {
         return $this->hasMany(BankPayment::class);
@@ -64,5 +66,10 @@ class User extends Authenticatable
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
+    }
+
+    public function charts(): HasMany
+    {
+        return $this->hasMany(Chart::class);
     }
 }

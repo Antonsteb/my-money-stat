@@ -7,14 +7,8 @@ use App\Services\Payments\Upload\File\Parsers\CSV\TinkoffCSVParser;
 
 enum ChartTypes:string
 {
-    case Sberbank = 'sberbank';
-    case Tinkoff = 'tinkoff';
+    case Number = 'number';
+    case Line = 'line';
+    case Bar = 'bar';
 
-    function getCSVParser():CSVParser
-    {
-      return match ($this){
-            ChartTypes::Tinkoff => new TinkoffCSVParser(),
-            ChartTypes::Sberbank => new SberbankCSVParser(),
-        };
-    }
 }
