@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamp('date');
             $table->float('amount_sum')->default(0);
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
-
         });
     }
 

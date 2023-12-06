@@ -5,18 +5,18 @@ use App\Services\Payments\Upload\File\Parsers\CSV\CSVParser;
 use App\Services\Payments\Upload\File\Parsers\CSV\SberbankCSVParser;
 use App\Services\Payments\Upload\File\Parsers\CSV\TinkoffCSVParser;
 
-enum ChartTypes:string
+enum ChartIntervals:string
 {
-    case Number = 'number';
-    case Line = 'line';
-    case Bar = 'bar';
+    case Day = 'day';
+    case Month = 'month';
+//    case Year = 'year';
 
     public static function getValueNameList(): array
     {
         return [
-            self::Number->value => 'Номер',
-            self::Line->value => 'Линия',
-            self::Bar->value => 'Столбец',
+            self::Day->value => 'День',
+            self::Month->value => 'Месяц',
+//            self::Year->value => 'Год',
         ];
     }
 
