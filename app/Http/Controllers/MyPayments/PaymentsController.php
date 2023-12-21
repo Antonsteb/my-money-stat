@@ -25,7 +25,6 @@ class PaymentsController extends Controller
 
     public function setCategory(SetCategoryRequest $request): RedirectResponse
     {
-;
         /** @var User $user */
         $user = Auth::user();
         /** @var BankPayment $bankPayment */

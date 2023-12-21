@@ -1,20 +1,19 @@
 <?php
 
 namespace App\Services\Statistics;
-use App\Services\Payments\Upload\File\Parsers\CSV\CSVParser;
-use App\Services\Payments\Upload\File\Parsers\CSV\SberbankCSVParser;
-use App\Services\Payments\Upload\File\Parsers\CSV\TinkoffCSVParser;
 
 enum ChartTypes:string
 {
-    case Number = 'number';
+    case NumberSum = 'number-sum';
+    case NumberAvg = 'number-avg';
     case Line = 'line';
     case Bar = 'bar';
 
     public static function getValueNameList(): array
     {
         return [
-            self::Number->value => 'Номер',
+            self::NumberSum->value => 'Сумма',
+            self::NumberAvg->value => 'Среднее значение',
             self::Line->value => 'Линия',
             self::Bar->value => 'Столбец',
         ];

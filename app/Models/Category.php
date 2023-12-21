@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int id
+ * @property string color
+ * @property string name
  * @property Category parentCategory
  * @property Category[] subcategories
  * @property BankPayment[] bankPayments

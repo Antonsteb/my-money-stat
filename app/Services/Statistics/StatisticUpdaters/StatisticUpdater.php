@@ -14,9 +14,10 @@ abstract class StatisticUpdater
         $this->next = $next;
     }
 
-    public function startUpdate(User $user, Carbon $start, Carbon $end){
+    public function startUpdate(User $user, Carbon $start, Carbon $end): void
+    {
         $this->update($user, $start, $end);
-        if ($this->next){
+        if ($this->next) {
             $this->next->startUpdate($user, $start, $end);
         }
     }

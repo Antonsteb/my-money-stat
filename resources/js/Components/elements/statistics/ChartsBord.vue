@@ -12,10 +12,10 @@ import BarWrapper from "@/Components/charts/BarWrapper.vue";
 import AddChart from "@/Components/elements/statistics/modals/AddChart.vue";
 import {useChartParamsStore} from "@/store/cahrtParams.js";
 
-defineProps({
+const props= defineProps({
     charts: Array
 })
-
+console.log(props)
 const layout = ref([
     { x: 0, y: 2, w: 2, h: 2, i: "0" },
     { x: 2, y: 0, w: 2, h: 2, i: "1" },
@@ -58,6 +58,8 @@ const chartParamsStore = useChartParamsStore()
 chartParamsStore.loadIntervals()
 categoriesStore.get();
 chartParamsStore.loadTypes()
+
+const chartsComponents = { line:LineWrapper, bar:BarWrapper }
 </script>
 
 <template>
@@ -85,9 +87,8 @@ chartParamsStore.loadTypes()
                        :i="item.i"
                        :key="item.i"
             >
-
-                <LineWrapper/>
-<!--                <BarWrapper/>-->
+                {{item.type}}
+                <component :is="chartsComponents[item.type]" :chartData="item.chartData" :chartLabels="item.chartLabels"></component>
                 <span class="remove" @click="removeItem(item.i)">x</span>
             </grid-item>
         </grid-layout>

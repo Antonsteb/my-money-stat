@@ -15,7 +15,7 @@ class DayStatisticUpdater extends StatisticUpdater
 
     protected function update(User $user, Carbon $start, Carbon $end)
     {
-        //todo: не плохо бы сделать декоратор, лимитирующий количество данных за раз
+        //TODO: не плохо бы сделать декоратор, лимитирующий количество данных за раз
 
         $categories = $user->categories()->with(['bankPayments' => function (Builder $query) use ($start, $end) {
             $query->whereBetween('date',[$start, $end]);

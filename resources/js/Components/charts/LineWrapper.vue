@@ -15,30 +15,36 @@ import {options} from "@/config/charts/default";
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement)
 
-defineProps({
-    // modelValue: {
-    //     type: String,
-    //     required: true,
-    // },
+const props = defineProps({
+    chartData: {
+        type: Array,
+        required: true,
+    },
+    chartLabels: {
+        type: Array,
+        required: true,
+    },
 });
-
-// defineEmits(['update:modelValue']);
-
+options.spanGaps = true
 const chartData = ref({
-    labels: [ 'January', 'February', 'March'],
-    datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-    }]
+    labels: props.chartLabels,
+    datasets:props.chartData
 });
+// const chartData = ref({
+//     labels: ['123', '123', '123', '123', '123', '123', '123'],
+//     datasets: [{
+//         label: 'My First Dataset',
+//         data: [65, null, 80, 81, 56, 55, 40],
+//         // fill: false,
+//         borderColor: 'rgb(75, 192, 192)',
+//         // tension: 0.1
+//     }]
+// });
 
 </script>
-
+//:style="{height: `auto`,}"
 <template>
     <div>
-        <Line :data="chartData" :options="options"/>
+        <Line :data="chartData" :options="options" />
     </div>
 </template>

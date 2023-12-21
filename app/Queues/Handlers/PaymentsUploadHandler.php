@@ -10,7 +10,6 @@ class PaymentsUploadHandler implements QueueHandlerInterface
 
     public function handle($msg): void
     {
-        echo $msg->body;
         $data = json_decode($msg->body);
         /** @var PaymentsUpload $paymentsUpload точно есть иначе бы была ошибка валидации */
         $paymentsUpload = PaymentsUpload::query()->find($data->id);
