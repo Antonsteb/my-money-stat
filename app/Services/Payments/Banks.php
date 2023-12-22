@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Services\Payments;
-use App\Services\Payments\Upload\File\Parsers\CSV\CSVParser;
-use App\Services\Payments\Upload\File\Parsers\CSV\SberbankCSVParser;
-use App\Services\Payments\Upload\File\Parsers\CSV\TinkoffCSVParser;
+use App\Services\Payments\Upload\File\CSV\CSVUploader;
+use App\Services\Payments\Upload\File\CSV\SberbankCSVUploader;
+use App\Services\Payments\Upload\File\CSV\TinkoffCSVUploader;
 
 enum Banks:string
 {
     case Sberbank = 'sberbank';
     case Tinkoff = 'tinkoff';
 
-    function getCSVParser():CSVParser
+    function getCSVParser():CSVUploader
     {
       return match ($this){
-            Banks::Tinkoff => new TinkoffCSVParser(),
-            Banks::Sberbank => new SberbankCSVParser(),
+            Banks::Tinkoff => new TinkoffCSVUploader(),
+            Banks::Sberbank => new SberbankCSVUploader(),
         };
     }
 }

@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Services\Payments\Upload\File\Parsers\CSV;
+namespace App\Services\Payments\Upload\File\CSV;
 
-use App\Models\payments\PaymentsUpload;
 use App\Models\User;
-use App\Services\Payments\Banks;
+use App\Services\Payments\Upload\Dto\ResulUploadDto;
+use App\Services\Payments\Upload\File\Parsers\Adapters\FileParserAdapter;
+use App\Services\Payments\Upload\UploaderInterface;
 use Illuminate\Support\Facades\Storage;
 
-abstract class CSVParser
+abstract class CSVUploader implements UploaderInterface
 {
+
     protected abstract function convertLine(array $line): array | false;
 
-    public function parse(User $user, string $path): int
+    public function upload(User $user, object $params): ResulUploadDto
     {
+        $resulUploadDto = new ResulUploadDto();
         $countError = 0;
         $count = 0;
-        $handle = fopen(Storage::disk('payments')->path($path), "r");
+        $handle = fopen(Storage::disk('payments')->path($params->path), "r");
 
         if ($handle !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE && $countError < 5) {
@@ -25,6 +28,8 @@ abstract class CSVParser
                     if ($paymentData) {
                         $user->bankPayments()->create($paymentData);
                         $count++;
+                        $resulUploadDto->setMinDate($paymentData['date']);
+                        $resulUploadDto->setMaxDate($paymentData['date']);
                     }
                 }catch (\Throwable $e){
                     echo $e->getMessage();die;
@@ -33,8 +38,9 @@ abstract class CSVParser
             }
             fclose($handle);
         }
-//            Storage::disk('payments')->delete($path);
-        return $count;
+        Storage::disk('payments')->delete($params->path);
+        $resulUploadDto->setCountPaymentsLoaded($count);
+        return $resulUploadDto;
     }
 
 }

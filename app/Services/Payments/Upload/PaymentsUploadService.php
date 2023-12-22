@@ -3,6 +3,7 @@
 namespace App\Services\Payments\Upload;
 
 use App\Models\payments\PaymentsUpload;
+use App\Services\RabbitMQService;
 
 class PaymentsUploadService
 {
@@ -13,18 +14,19 @@ class PaymentsUploadService
     {
     }
 
-    public function upload($params): void
+    public function upload(object $params): void
     {
-        if ($this->paymentsUpload->type === TypeLoader::File){
-            $this->uploadCSV($params->path);
-        }
-    }
+        $uploader = $this->paymentsUpload->type->getUploader($this->paymentsUpload->bank_name);
+        $resulUploadDto = $uploader->upload($this->paymentsUpload->user, $params);
+        $this->paymentsUpload->count_payments = $resulUploadDto->getCountPaymentsLoaded();
+        $this->paymentsUpload->save();
 
-    private function uploadCSV(string $path): void
-    {
-      $countPaymentsLoad = $this->paymentsUpload->bank_name->getCSVParser()->parse($this->paymentsUpload->user, $path);
-      $this->paymentsUpload->count_payments = $countPaymentsLoad;
-      $this->paymentsUpload->save();
+        $message = json_encode([
+            'user_id' => $this->paymentsUpload->user->id,
+            'start' => $resulUploadDto->getMinDate()->format('Y-m-d'),
+            'end' => $resulUploadDto->getMaxDate()->format('Y-m-d')
+        ]);
+        (new RabbitMQService())->publish($message,'statistics','update');
     }
 
 }

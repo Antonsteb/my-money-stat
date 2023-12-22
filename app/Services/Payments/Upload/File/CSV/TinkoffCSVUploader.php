@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Payments\Upload\File\Parsers\CSV;
+namespace App\Services\Payments\Upload\File\CSV;
 
 use App\Services\Payments\Banks;
 use Illuminate\Support\Carbon;
 
-class TinkoffCSVParser extends CSVParser
+class TinkoffCSVUploader extends CSVUploader
 {
 
     protected function convertLine(array $line): array | false

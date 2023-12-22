@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Payments\Upload\File\Parsers\CSV;
+namespace App\Services\Payments\Upload\File\CSV;
 
-class SberbankCSVParser extends CSVParser
+class SberbankCSVUploader extends CSVUploader
 {
 
     protected function convertLine(array $line): array

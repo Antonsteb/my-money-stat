@@ -24,8 +24,6 @@ class PaymentsFilesController extends Controller
 
     public function add(AddPaymentsFileRequest $request)
     {
-//        dd($request->file('file'));
-
         /** @var User $user */
         $user = Auth::user();
         $fileName = $user->id . '/'. $request->file('file')->getClientOriginalName();

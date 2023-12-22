@@ -7,7 +7,7 @@ use App\Services\Statistics\StatisticUpdaters\DayStatisticUpdater;
 use App\Services\Statistics\StatisticUpdaters\MonthStatisticUpdater;
 use Carbon\Carbon;
 
-class StatisticsHandler implements QueueHandlerInterface
+class StatisticsUpdateHandler implements QueueHandlerInterface
 {
 
     public function handle($msg): void
