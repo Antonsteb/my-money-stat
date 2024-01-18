@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ChartResource extends JsonResource
 {
+    public static $wrap = null;
     /**
      * Transform the resource into an array.
      *
@@ -32,7 +33,7 @@ class ChartResource extends JsonResource
             'y' => $this->y,
             'w' => $this->w,
             'h' => $this->h,
-            'i' => $this->i,
+            'i' => $this->id,
             'chartLabels' => $chartBuilder->getLabels(),
             'chartData' => $chartBuilder->getChartData(),
 //            'chartLabels' => $chartEntity->getLabels(),

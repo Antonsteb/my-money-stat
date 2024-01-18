@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('charts')->name('charts.')->group(function () {
         Route::post('/add', [ChartsController::class, 'add'])->name('add');
+        Route::patch('/{chart}/position', [ChartsController::class, 'updatePosition'])->name('update-position');
+        Route::patch('/{chart}/size', [ChartsController::class, 'updateSize'])->name('update-size');
     });
 
 });

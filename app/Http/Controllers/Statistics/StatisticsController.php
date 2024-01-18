@@ -22,7 +22,7 @@ class StatisticsController extends Controller
         $user = Auth::user();
         $charts = $user->charts()->with('categories')->get();
         return Inertia::render('Statistics/Charts', [
-            'charts' => json_decode(ChartResource::collection($charts)->toJson())
+            'charts' => ChartResource::collection($charts)->toArray($request)
         ]);
     }
 }

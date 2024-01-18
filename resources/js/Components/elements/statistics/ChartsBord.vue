@@ -11,6 +11,7 @@ import LineWrapper from "@/Components/charts/LineWrapper.vue";
 import BarWrapper from "@/Components/charts/BarWrapper.vue";
 import AddChart from "@/Components/elements/statistics/modals/AddChart.vue";
 import {useChartParamsStore} from "@/store/cahrtParams.js";
+import {mande} from "mande";
 
 const props= defineProps({
     charts: Array
@@ -46,9 +47,20 @@ onMounted(()=> {
      index.value++;
 }
  function removeItem(val) {
-    const index = layout.value.map(item => item.i).indexOf(val);
+     const index = layout.value.map(item => item.i).indexOf(val);
      layout.value.splice(index, 1);
+ }
+
+
+function resizedEvent(i, newH, newW, newHPx, newWPx) {
+    const chartsApi = mande(`/api/charts/${i}/size`)
+    chartsApi.patch({w: newW, h: newH})
 }
+function movedEvent(i, newX, newY) {
+    const chartsApi = mande(`/api/charts/${i}/position`)
+    chartsApi.patch({x: newX, y: newY})
+}
+
 
 
 const openAddChart = ref(false);
@@ -86,6 +98,8 @@ const chartsComponents = { line:LineWrapper, bar:BarWrapper }
                        :h="item.h"
                        :i="item.i"
                        :key="item.i"
+                       @resized="resizedEvent"
+                       @moved="movedEvent"
             >
                 {{item.type}}
                 <component :is="chartsComponents[item.type]" :chartData="item.chartData" :chartLabels="item.chartLabels"></component>
