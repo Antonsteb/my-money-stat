@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('categories')->name('categories.')->group(function () {
         Route::post('/add', [CategoriesController::class, 'add'])->name('add');
+        Route::put('/edit', [CategoriesController::class, 'edit'])->name('edit');
+        Route::delete('/{id}/delete', [CategoriesController::class, 'delete'])->name('delete');
         Route::get('/all', [CategoriesController::class, 'all'])->name('all');
     });
     Route::prefix('charts')->name('charts.')->group(function () {

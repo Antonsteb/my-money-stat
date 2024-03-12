@@ -44,7 +44,7 @@ const chartData = ref({
 </script>
 //:style="{height: `auto`,}"
 <template>
-    <div>
+    <div class="h-full p-4">
         <Line :data="chartData" :options="options" />
     </div>
 </template>

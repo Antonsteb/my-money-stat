@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Categories;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\categories\AddCategoryRequest;
+use App\Http\Requests\categories\DeleteCategoryRequest;
+use App\Http\Requests\categories\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -29,7 +31,25 @@ class CategoriesController extends Controller
         /** @var User $user */
         $user = Auth::user();
         $user->categories()->create($request->all());
-        return Redirect::back()->with('success', 'User created.');
+        return Redirect::back();
+    }
+    public function edit(UpdateCategoryRequest $request): RedirectResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        /** @var Category $category */
+        $category = $user->categories()->find($request->id);
+        $category->update($request->except('id'));
+        return redirect('/categories');
+    }
+    public function delete($id)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        /** @var Category $category */
+        $category = $user->categories()->find($id);
+        $category->delete();
+        return response('');
     }
 
     public function all(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response

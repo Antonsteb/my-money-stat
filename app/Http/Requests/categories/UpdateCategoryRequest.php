@@ -7,10 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\File;
 use Illuminate\Validation\Rules\Enum;
 
-/** @property int parent_id */
-/** @property string name */
-/** @property string color */
-class AddCategoryRequest extends FormRequest
+/** @property int id */
+class UpdateCategoryRequest extends AddCategoryRequest
 {
 
     /**
@@ -20,10 +18,10 @@ class AddCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'parent_id' => ['nullable', 'int', 'exists:categories,id'],
-            'name' => ['required', 'string'],
-            'color' => ['required', 'string'],
+            ...parent::rules(),
+            'id' => ['required', 'int', 'exists:categories,id'],
         ];
     }
 }

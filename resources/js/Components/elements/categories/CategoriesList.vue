@@ -9,10 +9,14 @@ defineProps({
 })
 
 const addCategoryModal = ref(false);
-const parentId = ref(null);
+const categoryEditing = ref({});
 
-function openAddCategoryModal(parent_Id = null){
-    parentId.value = parent_Id
+function openAddCategoryModal(parent_Id = null) {
+    categoryEditing.value = {parent_Id: parent_Id}
+    addCategoryModal.value = true
+}
+function openEditCategoryModal(category) {
+    categoryEditing.value = category
     addCategoryModal.value = true
 }
 </script>
@@ -20,12 +24,15 @@ function openAddCategoryModal(parent_Id = null){
 <template>
     <div>
         <div class="categories-list">
-            <CategoryItem v-for="category in categories" :key="category.id" :category="category" :open-add-category-modal="openAddCategoryModal" />
+            <CategoryItem v-for="category in categories" :key="category.id" :category="category"
+                          :open-add-category-modal="openAddCategoryModal"
+                          :open-edit-category-modal="openEditCategoryModal"
+            />
             <div class="add-category" @click="openAddCategoryModal()">+</div>
         </div>
 
         <Modal :show="addCategoryModal" @close="addCategoryModal = false">
-            <AddCategory :parent-id="parentId" :close-modal="() => addCategoryModal = false"/>
+            <AddCategory :category-editing="categoryEditing" :close-modal="() => addCategoryModal = false"/>
         </Modal>
     </div>
 </template>

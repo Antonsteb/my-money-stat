@@ -101,9 +101,9 @@ const chartsComponents = { line:LineWrapper, bar:BarWrapper }
                        @resized="resizedEvent"
                        @moved="movedEvent"
             >
-                {{item.type}}
+<!--                {{item.type}}-->
                 <component :is="chartsComponents[item.type]" :chartData="item.chartData" :chartLabels="item.chartLabels"></component>
-                <span class="remove" @click="removeItem(item.i)">x</span>
+<!--                <span class="remove" @click="removeItem(item.i)">x</span>-->
             </grid-item>
         </grid-layout>
     </div>

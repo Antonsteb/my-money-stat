@@ -5,7 +5,7 @@ import "vue3-colorpicker/style.css";
 import InputLabel from "@/Components/form/info/InputLabel.vue";
 import InputError from "@/Components/form/info/InputError.vue";
 
-defineProps({
+const props = defineProps({
     modelValue: {
         type: String,
         required: true,
@@ -18,7 +18,7 @@ defineProps({
 
 
 const emits = defineEmits(['update:modelValue']);
-const pureColor = ref("red");
+const pureColor = ref(props.modelValue);
 watch(pureColor, async (newQuestion, oldQuestion) => {
     emits('update:modelValue', newQuestion)
 })

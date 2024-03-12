@@ -8,6 +8,9 @@ defineProps({
     openAddCategoryModal: {
         type: Function,
     },
+    openEditCategoryModal: {
+        type: Function,
+    },
 });
 </script>
 
@@ -18,7 +21,9 @@ defineProps({
                  @click="openAddCategoryModal(category.id)"
             />
             <div class="category-name">{{category.name}}</div>
-            <img class="block icon w-auto m-auto" src="/images/icons/edit.png" alt="edit" />
+            <img v-show="openEditCategoryModal" class="block icon w-auto m-auto" src="/images/icons/edit.png" alt="edit"
+                 @click="openEditCategoryModal(category)"
+            />
         </div>
         <div class="subcategories" v-bind:style='{borderColor : category.color}'>
             <div class="subcategory" v-for="subcategory in category.subcategories"
@@ -26,6 +31,9 @@ defineProps({
                  v-bind:style='{borderColor : subcategory.color}'
             >
                 {{subcategory.name}}
+                <img v-show="openEditCategoryModal" class="block icon w-auto m-auto" src="/images/icons/edit.png" alt="edit"
+                     @click="openEditCategoryModal(subcategory)"
+                />
             </div>
             <div class="mt-2">
             </div>
@@ -68,6 +76,7 @@ defineProps({
     border-top-left-radius: 8px;
     border: 1px solid;
     border-right: 6px solid;
-
+    display: grid;
+    grid-template-columns: 1fr 20px;
 }
 </style>

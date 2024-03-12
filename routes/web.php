@@ -5,6 +5,7 @@ use App\Http\Controllers\MyPayments\PaymentsController;
 use App\Http\Controllers\MyPayments\PaymentsFilesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Statistics\StatisticsController;
+use App\Http\Resources\ChartResource;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,7 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [PaymentsController::class, 'list'])->name('list');
     });
     Route::prefix('categories')->name('categories.')->group(function () {
-        Route::get('/', [CategoriesController::class, 'list'])->name('list');
+        Route::any('/', [CategoriesController::class, 'list'])->name('list');
     });
 
     Route::prefix('my-files')->name('my-files.')->group(function () {
@@ -58,11 +59,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/test', function () {
     $user = \App\Models\User::query()->first();
-    $start = \Carbon\Carbon::parse('2023-10-01 00:00:00');
-    $end = \Carbon\Carbon::parse('2023-12-03 13:42:13');
-    $updaterMonth = new \App\Services\Statistics\StatisticUpdaters\MonthStatisticUpdater();
-    $updater = new \App\Services\Statistics\StatisticUpdaters\DayStatisticUpdater($updaterMonth);
-    $updater->startUpdate($user, $start, $end);
+    $charts = $user->charts()->with('categories')->get();
+    dd(json_decode(ChartResource::collection($charts)->toJson()));
+
 
 });
 

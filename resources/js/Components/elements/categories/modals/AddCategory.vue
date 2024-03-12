@@ -3,16 +3,13 @@ import {useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/form/fields/TextInput.vue";
 import SecondaryButton from "@/Components/form/buttons/SecondaryButton.vue";
 import Colorpicker from "@/Components/form/fields/Colorpicker.vue";
+import DangerButton from "@/Components/form/buttons/DangerButton.vue";
+import {mande} from "mande";
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
-    parentId: {
-        default: null
-    },
-    name: {
-        default: ''
-    },
-    color: {
-        default: "red"
+    categoryEditing: {
+        default: {}
     },
     closeModal: {
         type: Function,
@@ -21,27 +18,43 @@ const props = defineProps({
 });
 
 const form = useForm({
-    parent_id: props.parentId,
-    name: props.name,
-    color: props.color,
+    parent_id: props.categoryEditing.parent_id,
+    name: props.categoryEditing.name,
+    color: props.categoryEditing.color,
+    id: props.categoryEditing.id,
 });
 
 
-const sendFile = () => {
-    form.post(route('categories.add'), {
+const sendCategory = (e) => {
+    const options = {
         preserveScroll: true,
         onSuccess: () => props.closeModal(),
         // onError: () => passwordInput.value.focus(),
         // onFinish: () => form.reset(),
-    });
+    };
+    if (props.categoryEditing?.id){
+        form.put(route('categories.edit'), options);
+    } else {
+        form.post(route('categories.add'), options);
+    }
 };
+const removeCategory = (e) => {
+    e.preventDefault();
+    const result = confirm('вы уверенны что хотите удалить категорию?');
+    if (result) {
+        const categoryDeleteApi = mande(route('categories.delete', {'id': props.categoryEditing.id}));
+        categoryDeleteApi.delete();
+        props.closeModal();
+        router.reload();
+    }
+}
 </script>
 
 
 <template>
     <div class="p-6">
 
-        <form @submit.prevent="sendFile">
+        <form @submit.prevent="sendCategory">
             <TextInput
                 id="parent_id"
                 name="parent_id"
@@ -69,6 +82,7 @@ const sendFile = () => {
 
 
             <div class="mt-6 flex justify-end">
+                <DangerButton class="mr-4" @click="removeCategory" >Удалить</DangerButton>
                 <SecondaryButton type="submit" :disabled="form.processing"> Отправить </SecondaryButton>
             </div>
         </form>
