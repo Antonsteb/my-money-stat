@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\Social\SocialCallbackController;
+use App\Http\Controllers\Auth\Social\SocialRedirectController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,14 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+
+    Route::prefix('social')->name('social.')->group(function () {
+        Route::get('url', [SocialRedirectController::class, 'socialURL'])->name('url');
+        Route::prefix('callback')->name('callback.')->group(function () {
+            Route::get('vk', [SocialCallbackController::class, 'vk'])->name('vk');
+            Route::get('yandex', [SocialCallbackController::class, 'yandex'])->name('yandex');
+        });
+    });
 });
 
 Route::middleware('auth')->group(function () {
