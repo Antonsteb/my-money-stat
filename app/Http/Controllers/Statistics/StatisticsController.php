@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Statistics;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ChartResource;
-use App\Models\Chart;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\users\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;

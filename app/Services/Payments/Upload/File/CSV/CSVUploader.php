@@ -2,7 +2,7 @@
 
 namespace App\Services\Payments\Upload\File\CSV;
 
-use App\Models\User;
+use App\Models\users\User;
 use App\Services\Payments\Upload\Dto\ResulUploadDto;
 use App\Services\Payments\Upload\File\Parsers\Adapters\FileParserAdapter;
 use App\Services\Payments\Upload\UploaderInterface;

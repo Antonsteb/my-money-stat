@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\users;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Category;
+use App\Models\Chart;
 use App\Models\payments\BankPayment;
 use App\Models\payments\PaymentsUpload;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property BankPayment[] bankPayments
  * @property Category[] categories
  * @property Chart[] charts
+ * @property SocialAccount[] socialAccounts
  */
 class User extends Authenticatable
 {
@@ -71,5 +73,11 @@ class User extends Authenticatable
     public function charts(): HasMany
     {
         return $this->hasMany(Chart::class);
+    }
+
+
+    public function socialAccounts(): HasMany
+    {
+        return $this->hasMany(SocialAccount::class);
     }
 }

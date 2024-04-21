@@ -2,13 +2,9 @@
 
 namespace App\Services\Statistics\StatisticUpdaters;
 
-use App\Models\Category;
-use App\Models\payments\BankPayment;
-use App\Models\statistics\DayStatistic;
-use App\Models\User;
+use App\Models\users\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 class DayStatisticUpdater extends StatisticUpdater
 {

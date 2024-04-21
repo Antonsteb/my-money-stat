@@ -2,7 +2,7 @@
 
 namespace App\Queues\Handlers;
 
-use App\Models\User;
+use App\Models\users\User;
 use App\Services\Statistics\StatisticUpdaters\DayStatisticUpdater;
 use App\Services\Statistics\StatisticUpdaters\MonthStatisticUpdater;
 use Carbon\Carbon;

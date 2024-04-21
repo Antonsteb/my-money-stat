@@ -5,7 +5,7 @@ namespace App\Http\Controllers\MyPayments;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SetCategoryRequest;
 use App\Models\payments\BankPayment;
-use App\Models\User;
+use App\Models\users\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

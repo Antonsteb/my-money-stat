@@ -2,7 +2,7 @@
 
 namespace App\Services\Statistics\StatisticUpdaters;
 
-use App\Models\User;
+use App\Models\users\User;
 use Carbon\Carbon;
 
 abstract class StatisticUpdater

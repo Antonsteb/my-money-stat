@@ -4,7 +4,7 @@ namespace App\Http\Controllers\MyPayments;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\files\AddPaymentsFileRequest;
-use App\Models\User;
+use App\Models\users\User;
 use App\Services\Payments\Upload\TypeLoader;
 use App\Services\RabbitMQService;
 use Illuminate\Http\Request;

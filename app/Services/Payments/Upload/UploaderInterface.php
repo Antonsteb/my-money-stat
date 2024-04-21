@@ -2,7 +2,7 @@
 
 namespace App\Services\Payments\Upload;
 
-use App\Models\User;
+use App\Models\users\User;
 use App\Services\Payments\Upload\Dto\ResulUploadDto;
 
 interface UploaderInterface
