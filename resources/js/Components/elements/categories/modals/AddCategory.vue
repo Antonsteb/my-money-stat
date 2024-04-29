@@ -16,9 +16,9 @@ const props = defineProps({
         required:true
     },
 });
-
+console.log(props.categoryEditing)
 const form = useForm({
-    parent_id: props.categoryEditing.parent_id,
+    parent_id: props.categoryEditing.parent_Id,
     name: props.categoryEditing.name,
     color: props.categoryEditing.color,
     id: props.categoryEditing.id,
@@ -26,6 +26,7 @@ const form = useForm({
 
 
 const sendCategory = (e) => {
+    console.log(form);
     const options = {
         preserveScroll: true,
         onSuccess: () => props.closeModal(),

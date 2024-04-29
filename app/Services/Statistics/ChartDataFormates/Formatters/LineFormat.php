@@ -1,54 +1,18 @@
 <?php
 
-namespace App\Services\Statistics\ChartDataBuilders;
+namespace App\Services\Statistics\ChartDataFormates\Formatters;
 
 use App\Models\Category;
 use App\Models\statistics\DayStatistic;
+use App\Services\Statistics\ChartDataFormates\ChartDataFormat;
 use App\Services\Statistics\ChartIntervals;
-use App\Services\Statistics\ChartTypes;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Collection;
 
-class ChartBuilder
+class LineFormat extends ChartDataFormat
 {
-    private array $labels = [];
-    private array $chartData = [];
-
-    public function __construct(
-        private readonly Carbon $startDate,
-        private readonly Carbon $endDate,
-        private readonly ChartTypes $chartType,
-        private readonly ChartIntervals $chartIntervals,
-        private readonly Collection $categories,
-    )
-    {
-
-    }
-
-    public function getLabels(): array
-    {
-        return  $this->labels;
-    }
-
-    public function getChartData(): array
-    {
-        return $this->chartData;
-    }
-
-    public function updateData(): void
-    {
-        $this->generateChartLabels();
-        $this->generateChartData();
-    }
-
-    private function generateNumberLabels(): void
-    {
-    }
-    private function generateNumberData(): void
-    {
-    }
-    private function generateChartLabels(): void
+    protected function updateChartLabels(): void
     {
         $period = new CarbonPeriod($this->startDate, $this->chartIntervals->getIntervalString(),$this->endDate);
 //        $dates = $period->map(function (Carbon $date) use ($format) {
@@ -60,7 +24,7 @@ class ChartBuilder
         }
         $this->labels = $dates;
     }
-    private function generateChartData(): void
+    protected function updateChartData(): void
     {
         $result = [];
         /** @var Category $category */

@@ -3,9 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Chart;
-use App\Services\Statistics\ChartDataBuilders\ChartBuilder;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
+use App\Services\Statistics\ChartDataFormates\Formatters\LineFormat;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,8 +23,8 @@ class ChartResource extends JsonResource
 
 //        $intervalEntity = $this->interval->getIntervalEntity($startDate, $endDate);
 //        $chartEntity = $this->type->getChartDataEntity($intervalEntity);
-        $chartBuilder = new ChartBuilder($startDate, $endDate, $this->type, $this->interval, $this->categories);
-        $chartBuilder->updateData();
+        $chartFormatter = $this->type->getDataFormatter($startDate, $endDate, $this->interval, $this->categories);
+        $chartFormatter->updateData();
         return [
             'type' => $this->type,
             'x' => $this->x,
@@ -34,8 +32,8 @@ class ChartResource extends JsonResource
             'w' => $this->w,
             'h' => $this->h,
             'i' => $this->id,
-            'chartLabels' => $chartBuilder->getLabels(),
-            'chartData' => $chartBuilder->getChartData(),
+            'chartLabels' => $chartFormatter->getLabels(),
+            'chartData' => $chartFormatter->getChartData(),
 //            'chartLabels' => $chartEntity->getLabels(),
 //            'chartData' => $chartEntity->getChartData($this->categories),
         ];

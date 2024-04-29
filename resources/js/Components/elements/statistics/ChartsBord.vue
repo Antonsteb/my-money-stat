@@ -1,10 +1,8 @@
 <script setup>
 
 import PrimaryButton from "@/Components/form/buttons/PrimaryButton.vue";
-import PaymentsFileLoad from "@/Components/elements/my-payments/modals/PaymentsFileLoad.vue";
 import Modal from "@/Components/elements/Modal.vue";
 import {onMounted, ref} from "vue";
-import SetCategory from "@/Components/elements/my-payments/modals/SetCategory.vue";
 import {useCategoriesStore} from "@/store/categories.js";
 import { GridLayout, GridItem } from "vue3-grid-layout-next"
 import LineWrapper from "@/Components/charts/LineWrapper.vue";
@@ -12,6 +10,9 @@ import BarWrapper from "@/Components/charts/BarWrapper.vue";
 import AddChart from "@/Components/elements/statistics/modals/AddChart.vue";
 import {useChartParamsStore} from "@/store/cahrtParams.js";
 import {mande} from "mande";
+import PieWrapper from "@/Components/charts/PieWrapper.vue";
+import NumberSumWrapper from "@/Components/charts/NumberSumWrapper.vue";
+import NumberAvgWrapper from "@/Components/charts/NumberAvgWrapper.vue";
 
 const props= defineProps({
     charts: Array
@@ -71,7 +72,13 @@ chartParamsStore.loadIntervals()
 categoriesStore.get();
 chartParamsStore.loadTypes()
 
-const chartsComponents = { line:LineWrapper, bar:BarWrapper }
+const chartsComponents = {
+    line:LineWrapper,
+    bar:BarWrapper,
+    'number-sum':NumberSumWrapper,
+    'number-avg':NumberAvgWrapper,
+    pie:PieWrapper
+}
 </script>
 
 <template>
